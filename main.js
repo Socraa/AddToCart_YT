@@ -13,7 +13,7 @@ const appSettings = {
 
 const app = initializeApp(appSettings); // The argument of initializeApp is the The Firebase configuration object, it's just an object with info that identifies your Firebase project.
 const database = getDatabase(app);
-const thingsToBuy = ref(database, "things");
+const thingsToBuy = ref(database, "things"); // ref points the exact location of the database (database, path)
 
 
 
@@ -24,18 +24,26 @@ const ull = document.getElementById("shopping_list");
 add_btn.addEventListener('click', () => {
     let inputValue = input.value;
 
-    push(thingsToBuy, inputValue);
-
-
+    push(thingsToBuy, inputValue); // push the inputValue to the thingsToBuy which is the ref which is the exact location of the database
     clear_input(input);
 })
 
+// onValue is a listener, whenever any data changes from thingsToBuy, it will run.
+// snapshot is the data you receive from firebase
 onValue(thingsToBuy, function(snapshot) {
-    // console.log(snapshot.val());
-    let itemsArray = Object.values(snapshot.val())
-    
+
+    let itemsArray = Object.entries(snapshot.val()) // .entries get the keys and value of the given value from the database
+                                                    // turns it into a nested array
+    clear_shopping_list();
+
     for (let i = 0; i < itemsArray.length; i++ ){
-        prependItems(ull, itemsArray[i]);
+
+        let current_item = itemsArray[i];  // [[id, {name: value}]]
+        let currentItemID = current_item[0]; // will only have id of the current_item
+        let currentItemValue = current_item[1]; // will only have the value
+        console.log(currentItemValue);  
+
+        prependItems(ull, currentItemValue);
     }
 })
 
@@ -50,6 +58,46 @@ function prependItems(ul, value) {
     products.textContent = value;
     ul.prepend(products);
 }
+
+function clear_shopping_list(){
+        ull.innerHTML = ""
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // let scrimbaUsersEmails = {
 //     "00": "Monitor",
