@@ -5,7 +5,7 @@
 
 // initializeApp() boots Firebase for your project.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js"
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js"
+import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js"
 
 const appSettings = {
     databaseURL: "https://addtocart-d8379-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -32,19 +32,27 @@ add_btn.addEventListener('click', () => {
 // snapshot is the data you receive from firebase
 onValue(thingsToBuy, function(snapshot) {
 
-    let itemsArray = Object.entries(snapshot.val()) // .entries get the keys and value of the given value from the database
-                                                    // turns it into a nested array
-    clear_shopping_list();
+    if (snapshot.exists()){
 
-    for (let i = 0; i < itemsArray.length; i++ ){
+        let itemsArray = Object.entries(snapshot.val()) // .entries get the keys and value of the given value from the database
+                                                        // turns it into a nested array
+        clear_shopping_list();
 
-        let current_item = itemsArray[i];  // [[id, {name: value}]]
-        let currentItemID = current_item[0]; // will only have id of the current_item
-        let currentItemValue = current_item[1]; // will only have the value
-        console.log(currentItemValue);  
+        for (let i = 0; i < itemsArray.length; i++ ){
 
-        prependItems(ull, currentItemValue);
+            let current_item = itemsArray[i];  // [[id, {name: value}]]
+            // let currentItemID = current_item[0]; // will only have id of the current_item
+            // let currentItemValue = current_item[1]; // will only have the value
+            // console.log(currentItemValue);  
+
+            prependItems(current_item);
+        }
+
+    } else {
+        ull.innerHTML = "No items here..."
     }
+
+
 })
 
 // function to clear the input
@@ -53,10 +61,20 @@ function clear_input(s) {
 }
 
 // function to add li to the ul
-function prependItems(ul, value) {
+function prependItems(value) {
+    let currentId = value[0]
+    let currentValue = value[1]
+
     let products = document.createElement('li');
-    products.textContent = value;
-    ul.prepend(products);
+    products.textContent = currentValue;
+
+    products.addEventListener('click', ()=> {
+        console.log(currentValue);
+        let exactLocation = ref(database, `things/${currentId}` );
+        remove(exactLocation);
+    } )
+
+    ull.prepend(products);
 }
 
 function clear_shopping_list(){
