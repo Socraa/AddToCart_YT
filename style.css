@@ -8,20 +8,22 @@ html, body { /*  html is the root element of the page — the parent of <body>. 
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     
     user-select: none;
 }
 
 .main_container{
+    width: 100%;
     background-color: rgb(250, 146, 163);
-    border: 2px solid rgb(122, 44, 57);
+    /* border: 2px solid rgb(122, 44, 57); */
     display: flex;
     flex-direction: column;
-    max-width: 320px; 
+    max-width: 360px; 
     align-items: center;
-    margin: 30px auto 0;
-    border-radius: 12px;
+    margin: 0;
+    /* margin: 30px auto 0; */
+    /* border-radius: 12px; */
     padding-top: 20px;
 }
 
@@ -32,13 +34,14 @@ img{
 
 .second_container {
     box-sizing: border-box;
+    min-height: 100vh;    /* vh = viewport height */
     background-color: rgb(201, 95, 112);
     display: flex;
     flex-direction: column;
     width: 100%;
     align-items: center;
     padding: 30px 10px;
-    border-radius: 100px 100px 11px 11px;
+    border-radius: 100px 100px 0px 0px;
     text-align: center;
 }
 
