@@ -3,8 +3,14 @@ html, body { /*  html is the root element of the page — the parent of <body>. 
                  body = the content inside that container */
     margin: 0;
     padding: 0;
-    background-color: black;
+    height: 100%;
+    background-color: rgb(189, 49, 72);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     box-sizing: border-box;
+    
+    user-select: none;
 }
 
 .main_container{
@@ -55,6 +61,10 @@ ul li {
     flex-grow: 1;
 }
 
+ul li:hover{
+    background-color: rgb(255, 154, 154);
+    cursor: pointer;
+}
 #input_field{
     width: 200px;
     outline: none;
@@ -79,5 +89,8 @@ ul li {
     margin-bottom: 10px;
     /* font-size: 20px; */
     text-align: center;
-    
+}
+#add_btn:hover {
+    background-color: rgb(148, 27, 47);
+    cursor: pointer;
 }

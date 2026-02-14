@@ -24,6 +24,8 @@ const ull = document.getElementById("shopping_list");
 add_btn.addEventListener('click', () => {
     let inputValue = input.value;
 
+    if (inputValue === "") return;
+
     push(thingsToBuy, inputValue); // push the inputValue to the thingsToBuy which is the ref which is the exact location of the database
     clear_input(input);
 })
@@ -66,6 +68,7 @@ function prependItems(value) {
     let currentValue = value[1]
 
     let products = document.createElement('li');
+    products.classList.add("lii")
     products.textContent = currentValue;
 
     products.addEventListener('click', ()=> {
